@@ -9,8 +9,6 @@ Sub InitScreen()
 	cls
 End Sub
 
-dim Left as ubyte = 14
-dim Top as ubyte = 1
 dim x as float = 0
 dim y as float = 0
 
@@ -24,16 +22,16 @@ sub SelectBrick()
 		BrickCursor (Top + x * 3, Left + y * 4 - x * 2, 0)
 		'Управление курсором
 		if k$ = "q" and x>0 then
-			if (x - 1) / 2 <> int ((x - 1) / 2) then
+			x = x - 1
+			if x / 2 <> int (x / 2) then
 				y = y - 1
 			end if
-			x = x - 1
 		end if
 		if k$ = "a" and x<6 then
-			if (x + 1) / 2 = int ((x + 1) / 2) then
+			x = x + 1
+			if x / 2 = int (x / 2) then
 				y = y + 1
 			end if
-			x = x + 1
 		end if
 		if k$ = "o" and y>0 then
 			y = y - 1
