@@ -6,19 +6,28 @@ dim Top as ubyte = 1
 
 sub Game()
 	MatrixInit()
-
-	for i = 0 to 6
+    BrickOpened(Top, Left, m(0, 0))
+	for i = 1 to 5
 		for j = 0 to i
-			brick (Top + i * 3, Left + j * 4 - i * 2)
+			BrickClosed(Top + i * 3, Left + j * 4 - i * 2)
 		next
 	next
-	SelectBrick()
+	for j = 0 to 6
+		BrickOpened(Top + 18, Left + j * 4 - 12, m(6, j))
+	next
+	SelectBrick()	
 end sub
 
 'Инициализация матрицы
 sub MatrixInit()
-	dim m(7, 7) as ubyte
-	dim st(7, 7) as ubyte
+	'Очистка матриц
+	for i = 0 to 6
+		for j = 0 to 6
+			m(i, j) = 0
+			st(i, j) = 0
+		next
+	next
+	'Заполнение случайными блоками
 	dim rx, ry as ubyte
 	dim u as byte
 	for i = 0 to 27
@@ -32,5 +41,10 @@ sub MatrixInit()
 				st(rx, ry) = 1
 			end if
 		loop until u
+	next
+	'Применение статосов блоков
+	st(0, 0) = 2
+	for j = 0 to 6
+		st(6, j) = 2
 	next
 end sub
