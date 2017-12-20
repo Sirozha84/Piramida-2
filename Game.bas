@@ -150,7 +150,8 @@ sub CheckOpen()
 				if st(i + 1, j) = 0 and st(i + 1, j + 1) = 0 then o = 1: end if
 				if o then
 					st(i, j) = 2
-					BrickOpened(SX(i), SY(i, j), m(i, j)):
+					OpenBrick(SX(i), SY(i, j))
+					BrickOpened(SX(i), SY(i, j), m(i, j))
 				end if
 			end if
 		next
