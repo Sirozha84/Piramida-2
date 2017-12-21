@@ -2,9 +2,10 @@ dim m(6, 6) as ubyte	'Матрица доминошек
 dim st(6, 6) as ubyte	'Матрица статусов (0 - пусто, 1 - закрыто, 2 - открыто)
 dim d(27) as ubyte = {0, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 10, 10, 11, 12}
 dim Left as ubyte = 14	'Координаты сдвига пирамиды на экране
-dim Top as ubyte = 1
+dim Top as ubyte = 2
 dim x, y as float		'Курсор
 dim x1, y1 as ubyte		'Первый выбранный блок
+dim Level, Lives, Score, Mult as integer	'Всякие игровые переменные
 
 'Вычисление строчки на экране по номеру ячейки
 function SX(x as ubyte) as ubyte
@@ -56,7 +57,8 @@ function SelectBrick as ubyte
 end function
 
 'Процесс игры
-sub Game()
+function Piramida() as ubyte
+	dim win as byte = 0
 	MatrixInit()
     BrickOpened(Top, Left, m(0, 0))
 	for i = 1 to 5
@@ -84,10 +86,18 @@ sub Game()
 					BrickDeselect(SX(x1), SY(x1, y1))
 					mode = 0
 					if m(x, y) + m(x1, y1) = 12 then
+						Score = Score + Mult
+						print at 0,16; Score
 						DestroyBricks(SX(x1), SY(x1, y1), SX(x), SY(x, y))
 						st(x1, y1) = 0
 						st(x, y) = 0
 						CheckOpen()
+						win = 1
+						for i = 0 to 6
+							for j = 0 to i
+								if st(i, j) <> 0 then win = 0: end if
+							next
+						next
 					else
 						ErrorSound()
 					end if
@@ -98,8 +108,9 @@ sub Game()
 		else
 			ext = 1
 		end if
-	loop until ext
-end sub
+	loop until ext or win
+	return win
+end function
 
 'Инициализация игры
 sub MatrixInit()
@@ -157,3 +168,49 @@ sub CheckOpen()
 		next
 	next
 end sub
+
+'Сеанс игры
+function Game()
+	Level = 1
+	Lives = 3
+	Score = 0
+	Mult = 12
+	do
+		SetFont (0)
+		cls
+		print at 12, 11; "urowenx: "; Level
+		SetFont (1)
+		if Lives < 4 then
+			for i = 0 to Lives - 1
+				print at 0, i; ink 2; "@"
+			next
+		else
+			print at 0, 0; ink 2; "@"; ink 7; "`"; Lives
+		end if
+		print at 0,16; Score
+		pause 50
+		'Вызываем решение пирамиды и проверяем результат игры
+		if Piramida = 1 then
+			SetFont (0)
+			for i = 1 to 7
+				print at 12, 13; ink i; "pobeda!"
+				for j = 0 to 36 step 12
+					beep 0.03, i + j
+				next
+			next
+			Lives = Lives + 1
+			Mult = Mult + 12
+		else
+			SetFont (0)
+			for i = 7 to 1 step -1
+				print at 12, 12; ink 8 - i; "poravenie"
+				for j = 0 to 36 step 12
+					beep 0.03, i + j
+				next
+			next		
+			Lives = Lives - 1
+		end if
+		Level = Level + 1
+	loop until Lives = 0
+	return Score
+end function
