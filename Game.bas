@@ -87,7 +87,7 @@ function Piramida() as ubyte
 					mode = 0
 					if m(x, y) + m(x1, y1) = 12 then
 						Score = Score + Mult
-						print at 0,16; Score
+						print at 0,10; Score
 						DestroyBricks(SX(x1), SY(x1, y1), SX(x), SY(x, y))
 						st(x1, y1) = 0
 						st(x, y) = 0
@@ -179,6 +179,7 @@ function Game()
 		SetFont (0)
 		cls
 		print at 12, 11; "urowenx: "; Level
+		print at 0, 20; ink 1; "E - pas"
 		SetFont (1)
 		if Lives < 4 then
 			for i = 0 to Lives - 1
@@ -187,7 +188,7 @@ function Game()
 		else
 			print at 0, 0; ink 2; "@"; ink 7; "`"; Lives
 		end if
-		print at 0,16; Score
+		print at 0, 10; Score
 		pause 50
 		'Вызываем решение пирамиды и проверяем результат игры
 		if Piramida = 1 then
