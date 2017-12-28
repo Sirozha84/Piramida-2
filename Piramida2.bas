@@ -1,26 +1,27 @@
 #include <c:\Users\siroz\Projects\Piramida2\Game.bas>
 #include <c:\Users\siroz\Projects\Piramida2\Fonts.bas>
 #include <c:\Users\siroz\Projects\Piramida2\Subs.bas>
+#include <c:\Users\siroz\Projects\Piramida2\HiScores.bas>
 
 poke 23561,10
 poke 23562,1
-InitScreen()
+InitScreen
+InitTable
 SetFont(0)
 dim k as byte = 0
 do
-	cls
-	print at 5, 12; "piramida"
-	print at 10, 13; "start"
-	print at 12, 12; "rekordy"
-	print at 14, 12; "prawila"
-	print at 16, 11; "informaciq"
-	print at 21, 5; "sergej gordeew, 2017 g."
-	print at 23, 2; ink 1; "OPQA/SPACE ili strelki/ENTER"
+	BackGround()
+	print at 11, 11; "  start  "
+	print at 13, 11; " rekordy "
+	print at 15, 11; " prawila "
+	print at 17, 11; " ob igre "
+	'print at 21, 5; "sergej gordeew, 2017 g."
+	print at 23, 2; paper 1; ink 6; "OPQA/SPACE ili strelki/ENTER"
 	'border 1
 	do
-		print at 10 + k * 2, 10; over 1; paper 1; tab 22
+		print at 11 + k * 2, 11; over 1; paper 1; tab 20
 		pause 0
-		print at 10 + k * 2, 10; over 1; paper 0; tab 22
+		print at 11 + k * 2, 11; over 1; paper 0; tab 20
 		beep 0.0001, 50
 		key$ = inkey$
 		if key$ = "q" then
@@ -35,23 +36,31 @@ do
 	if k = 0 then
 		Game()
 	end if
+	if k = 1 then
+		BackGround()
+		DrawTable
+		print at 23, 9; paper 1; ink 6; "l`baq klawi{a"
+		pause 0
+	end if
 	if k = 2 then
-		for i = 10 to 23: print at i, 0;,,: next
-		print at 8, 0; "dlq pobedy neobhodimo razobratx"
-		print at 10, 0; "piramidu, ubiraq po dwa bloka"
-		print at 12, 0; "takim obrazom, ~toby summa ih"
-		print at 14, 0; "nomerow rawnqlasx 12i. blok"
-		print at 16, 0; "stanowitsq dostupnym kogda"
-		print at 18, 0; "oswobovdaetsq ego werhnqq ili"
-		print at 20, 0; "nivnqq grani."
-		print at 23, 9; ink 1; "l`baq klawi{a"
+		BackGround()
+		print at 7, 10; "prawila igry"
+		print at 9, 1; "dlq pobedy wam nuvno razobratx"
+		print at 11, 1; "piramidu, ubiraq po dwa bloka"
+		print at 13, 1; "takim obrazom, ~toby summa ih"
+		print at 15, 1; "nomerow rawnqlasx 12i. blok"
+		print at 17, 1; "stanowitsq dostupnym kogda"
+		print at 19, 1; "oswobovdaetsq ego werhnqq ili"
+		print at 21, 1; "nivnqq grani."
+		print at 23, 9; paper 1; ink 6; "l`baq klawi{a"
 		pause 0
 	end if
 	if k = 3 then
-		for i = 10 to 23: print at i, 0;,,: next
-		print at 10, 0; "awtor: sergej gordeew, 2017 god."
-		print at 12, 0; "sajt: WWW.SG-SOFTWARE.RU"
-		print at 23, 9; ink 1; "l`baq klawi{a"
+		BackGround()
+		print at 12, 12; "ob igre"
+		print at 14, 0; "awtor: sergej gordeew, 2017 god."
+		print at 16, 0; "sajt: WWW.SG-SOFTWARE.RU"
+		print at 23, 9; paper 1; ink 6; "l`baq klawi{a"
 		pause 0
 	end if
 loop

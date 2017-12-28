@@ -204,7 +204,7 @@ function Game()
 		else
 			SetFont (0)
 			for i = 7 to 1 step -1
-				print at 12, 12; ink 8 - i; "poravenie"
+				print at 12, 11; ink 8 - i; "poravenie!"
 				for j = 0 to 36 step 12
 					beep 0.03, i + j
 				next
