@@ -170,7 +170,7 @@ sub CheckOpen()
 end sub
 
 'Сеанс игры
-function Game()
+function Game() as integer
 	Level = 1
 	Lives = 3
 	Score = 0

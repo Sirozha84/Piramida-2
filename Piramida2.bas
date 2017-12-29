@@ -34,16 +34,17 @@ do
 		end if
 	loop until key$ = " " or key$ = chr(13)
 	if k = 0 then
-		Game()
+		RecToTable(50)
+		'RecToTable(Game)
 	end if
 	if k = 1 then
-		BackGround()
+		BackGround
 		DrawTable
 		print at 23, 9; paper 1; ink 6; "l`baq klawi{a"
 		pause 0
 	end if
 	if k = 2 then
-		BackGround()
+		BackGround
 		print at 7, 10; "prawila igry"
 		print at 9, 1; "dlq pobedy wam nuvno razobratx"
 		print at 11, 1; "piramidu, ubiraq po dwa bloka"
@@ -56,7 +57,7 @@ do
 		pause 0
 	end if
 	if k = 3 then
-		BackGround()
+		BackGround
 		print at 12, 12; "ob igre"
 		print at 14, 0; "awtor: sergej gordeew, 2017 god."
 		print at 16, 0; "sajt: WWW.SG-SOFTWARE.RU"
@@ -64,4 +65,4 @@ do
 		pause 0
 	end if
 loop
-'pause 0
+pause 0
