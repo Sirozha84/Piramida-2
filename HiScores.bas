@@ -42,44 +42,44 @@ sub RecToTable(sc as integer)
 end sub
 
 'Ввод имени
-function EnterName(n as ubyte) as string
+sub EnterName(n as ubyte)
 	dim x as byte = n + 9
-	dim y as byte = 0
+	dim k as byte = 0
 	dim b(10) as byte
 	dim name as string
 	do
 		do
-			print at x, 10 + y; flash 1; over 1; " "
+			print at x, 10 + k; flash 1; over 1; " "
 			pause 0
-			print at x, 10 + y; flash 0; over 1; " "
-			k$ = inkey$
-		loop until k$ <> ""
+			print at x, 10 + k; flash 0; over 1; " "
+			key$ = inkey$
+		loop until key$ <> ""
 		'print at 0,0; code (k$)
 		beep 0.001,50
 		'Всякие дебильные буквы, которые не помещаюся на английской раскладке
-		if k$ = chr(226) then k$ = "~": end if
-		if k$ = chr(195) then k$ = chr(127): end if
-		if k$ = chr(205) then k$ = "|": end if
-		if k$ = chr(204) then k$ = "{": end if
-		if k$ = chr(203) then k$ = "}": end if
+		if key$ = chr(226) then key$ = "~": end if
+		if key$ = chr(195) then key$ = chr(127): end if
+		if key$ = chr(205) then key$ = "|": end if
+		if key$ = chr(204) then key$ = "{": end if
+		if key$ = chr(203) then key$ = "}": end if
 		'Печатаем
-		if k$ >=  " " and y < 10 then
-			b(y) = code(k$)
-			print at x, 10 + y; k$
-			y = y + 1
+		if key$ >=  " " and k < 10 then
+			b(k) = code(key$)
+			print at x, 10 + k; key$
+			k = k + 1
 		end if
 		'Стираем
-		if k$ = chr(12) and y > 0 then
-			y = y - 1
-			print at x, 10 + y; " "
+		if key$ = chr(12) and k > 0 then
+			k = k - 1
+			print at x, 10 + k; " "
 		end if	
-	loop until k$ = chr(13)
+	loop until key$ = chr(13)
 	for i = 0 to 9
-		if i < y then
+		if i < k then
 			name = name + chr(b(i))
 		else
 			name = name + "."
 		end if
 	next
 	Names(n) = name
-end function
+end sub
