@@ -6,7 +6,6 @@ Sub InitScreen()
 	bright 0
 	over 0
 	border 0
-	cls
 End Sub
 
 'Рисование закрытого блока
@@ -39,31 +38,34 @@ end sub
 sub DestroyBricks(x1, y1, x2, y2 as ubyte)
 	print at x1, y1; ink 3; "-../"; at x1 + 1, y1; "M  O"; at x1 + 2, y1; "mnno"
 	print at x2, y2; ink 3; "-../"; at x2 + 1, y2; "M  O"; at x2 + 2, y2; "mnno"
-	for i = 50 to 30 step -10
-		beep 0.003, i
+	for i = 50 to 35 step -5
+		beep 0.0005, i
 	next
 	print at x1, y1; ink 3; "    "; at x1 + 1, y1; " EN "; at x1 + 2, y1; "    "
 	print at x2, y2; ink 3; "    "; at x2 + 1, y2; " EN "; at x2 + 2, y2; "    "
-	for i = 20 to 0 step -10
-		beep 0.003, i
+	for i = 35 to 20 step -5
+		beep 0.0005, i
 	next	
 	print at x1, y1; "    "; at x1 + 1, y1; "    "; at x1 + 2, y1; "    "
 	print at x2, y2; "    "; at x2 + 1, y2; "    "; at x2 + 2, y2; "    "
+	for i = 20 to 5 step -5
+		beep 0.0005, i
+	next
 end sub
 
 'Переворачивание блоков
 sub OpenBrick(x, y as ubyte)
 	print at x, y; ink 2; " '( "; at x + 1, y; " GH "; at x + 2, y; " gh "
-	for i = 0 to 10 step 10
-		beep 0.003, i
+	for i = 0 to 10 step 5
+		beep 0.0005, i
 	next
 	print at x, y; ink 3; " )"; ink 2; "* "; at x + 1, y; ink 3; " )"; ink 2; "* "; at x + 2, y; ink 3; " )"; ink 2; "* "
-	for i = 20 to 30 step 10
-		beep 0.003, i
+	for i = 20 to 30 step 5
+		beep 0.0005, i
 	next
 	print at x, y; ink 3; " +, "; at x + 1, y; " KL "; at x + 2, y; " kl "
-	for i = 40 to 50 step 10
-		beep 0.003, i
+	for i = 40 to 50 step 5
+		beep 0.0005, i
 	next
 end sub
 

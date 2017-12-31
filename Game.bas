@@ -22,25 +22,26 @@ function SelectBrick as ubyte
     do
 		BrickCursor (SX(x), SY(x, y), 1)
 		pause 0
-		k$ = inkey$
+		beep 0.0001, 50
 		BrickCursor (SX(x), SY(x, y), 0)
+		k$ = inkey$
 		'Управление курсором
-		if k$ = "q" and x > 0 then
+		if (k$ = "q" or k$ = chr(11)) and x > 0 then
 			x = x - 1
 			if x / 2 <> int (x / 2) then
 				y = y - 1
 			end if
 		end if
-		if k$ = "a" and x < 6 then
+		if (k$ = "a" or k$ = chr(10)) and x < 6 then
 			x = x + 1
 			if x / 2 = int (x / 2) then
 				y = y + 1
 			end if
 		end if
-		if k$ = "o" and y > 0 then
+		if (k$ = "o" or k$ = chr(8)) and y > 0 then
 			y = y - 1
 		end if
-		if k$ = "p" and y < 6 then
+		if (k$ = "p" or k$ = chr(9)) and y < 6 then
 			y = y + 1
 		end if
 		'Корректировка позиции
@@ -50,9 +51,8 @@ function SelectBrick as ubyte
 		if y > x then
 			y = x
 		end if
-		beep 0.005, 50
 		if k$ = "e" then return 0: end if
-	loop until k$ = " "
+	loop until k$ = " " or k$ = chr(13)
 	return 1
 end function
 
@@ -74,7 +74,7 @@ function Piramida() as ubyte
 	do
 		if SelectBrick() = 1 then
 			if st(x, y) = 2 then
-				beep 0.03, 30
+				beep 0.03, 50
 				if mode = 0 then
 					'Выбор первого блока
 					BrickSelect(SX(x), SY(x, y))
@@ -85,8 +85,8 @@ function Piramida() as ubyte
 					'Выбор второго блока
 					BrickDeselect(SX(x1), SY(x1, y1))
 					mode = 0
-					if m(x, y) + m(x1, y1) = 12 then
-						Score = Score + Mult
+					if m(x, y) + m(x1, y1) = 12 and (x <> x1 or y <> y1) then
+						Score = Score + Level * 12
 						print at 0,10; Score
 						DestroyBricks(SX(x1), SY(x1, y1), SX(x), SY(x, y))
 						st(x1, y1) = 0
@@ -174,7 +174,6 @@ function Game() as integer
 	Level = 1
 	Lives = 3
 	Score = 0
-	Mult = 12
 	do
 		SetFont (0)
 		cls
@@ -193,17 +192,17 @@ function Game() as integer
 		'Вызываем решение пирамиды и проверяем результат игры
 		if Piramida = 1 then
 			SetFont (0)
-			for i = 1 to 7
+			for i = 0 to 7
 				print at 12, 13; ink i; "pobeda!"
 				for j = 0 to 36 step 12
 					beep 0.03, i + j
 				next
 			next
 			Lives = Lives + 1
-			Mult = Mult + 12
+			Level = Level + 1
 		else
 			SetFont (0)
-			for i = 7 to 1 step -1
+			for i = 7 to 0 step -1
 				print at 12, 11; ink 8 - i; "poravenie!"
 				for j = 0 to 36 step 12
 					beep 0.03, i + j
@@ -211,7 +210,6 @@ function Game() as integer
 			next		
 			Lives = Lives - 1
 		end if
-		Level = Level + 1
 	loop until Lives = 0
 	return Score
 end function

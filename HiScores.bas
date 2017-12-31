@@ -5,13 +5,14 @@ dim Scores(12) as integer
 sub InitTable()
 	for i = 0 to 11
 		Names(i) = ".........."
-		Names(i)= str(i+100)+"......."
-		Scores(i)=100-i*8
 	next
 end sub
 
 '¬ывод таблицы
-sub DrawTable()
+sub DrawTable(b as byte)
+	if b then
+		BackGround
+	end if
 	print at 7, 12; "rekordy"
 	for i = 0 to 11
 		print at 9 + i, 8 - (i + 1) / 10; i + 1; "."; Names(i); "."; Scores(i)
@@ -29,13 +30,12 @@ sub RecToTable(sc as integer)
 			next
 			Names(i) = "          "
 			Scores(i) = sc
-			DrawTable
+			DrawTable(1)
 			print at 23, 0; paper 1; ink 6; "wwedite swoe imq i navmite ENTER"
 			EnterName(i)
-			DrawTable
+			DrawTable(0)
 			print at 23, 0; paper 1; ink 6; "         l`baq klawi{a          "
 			pause 0
-			
 			exit for
 		end if
 	next
@@ -55,7 +55,7 @@ sub EnterName(n as ubyte)
 			key$ = inkey$
 		loop until key$ <> ""
 		'print at 0,0; code (k$)
-		beep 0.001,50
+		beep 0.0001, 50
 		'¬с€кие дебильные буквы, которые не помещаюс€ на английской раскладке
 		if key$ = chr(226) then key$ = "~": end if
 		if key$ = chr(195) then key$ = chr(127): end if
@@ -74,6 +74,7 @@ sub EnterName(n as ubyte)
 			print at x, 10 + k; " "
 		end if	
 	loop until key$ = chr(13)
+	beep 0.03, 50
 	for i = 0 to 9
 		if i < k then
 			name = name + chr(b(i))
